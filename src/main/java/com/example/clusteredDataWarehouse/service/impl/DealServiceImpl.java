@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 import static com.example.clusteredDataWarehouse.util.MessageConstants.*;
 
 @Service
@@ -34,6 +36,11 @@ public class DealServiceImpl implements DealService {
             throw new DuplicateException(NON_UNIQUE_ID);
         }
 
+        BigDecimal amount = dealRequest.getAmount();
+        if (amount.compareTo(BigDecimal.ZERO) < 0) {
+            throw new ValidationException(INVALID_DEAL_AMOUNT);
+        }
+
         boolean isValidFromCurrencyCode = currencyValidator.isValidCurrencyCode(dealRequest.getFromCurrency());
         if (!isValidFromCurrencyCode) {
             throw new ValidationException(INVALID_FROM_CURRENCY_CODE);
@@ -55,4 +62,6 @@ public class DealServiceImpl implements DealService {
 
         dealRepository.save(deal);
     }
+
+
 }

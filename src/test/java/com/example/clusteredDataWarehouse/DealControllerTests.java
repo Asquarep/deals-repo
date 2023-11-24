@@ -154,5 +154,7 @@ public class DealControllerTests {
         Assertions.assertEquals(dealRequest.getFromCurrency(), dealSaved.getFromCurrency());
         Assertions.assertEquals(dealRequest.getToCurrency(), dealSaved.getToCurrency());
         Assertions.assertEquals(0, dealRequest.getAmount().compareTo(dealSaved.getDealAmount()));
+        Assertions.assertNotEquals(null, dealSaved.getCreatedAt());
+        Assertions.assertNotEquals(0, dealSaved.getId());
     }
 }

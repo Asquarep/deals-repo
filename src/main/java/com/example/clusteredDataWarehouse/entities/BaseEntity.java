@@ -21,7 +21,4 @@ public class BaseEntity {
     @Column(name = "DATE_INSERTED")
     private LocalDateTime createdAt;
 
-    @UpdateTimestamp
-    @Column(name = "DATE_MODIFIED")
-    private LocalDateTime updatedAt;
 }

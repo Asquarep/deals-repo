@@ -8,5 +8,6 @@ public class MessageConstants {
     public static final String NON_UNIQUE_ID = "Deal ID Must Be Unique";
     public static final String INVALID_FROM_CURRENCY_CODE = "Invalid Currency Code";
     public static final String INVALID_TO_CURRENCY_CODE = "Invalid Currency Code";
-    public static final String INVALID_DEAL_AMOUNT = "Deal amount must be greater than zero";
+    public static final String INVALID_DEAL_AMOUNT = "Deal amount must not be zero or less";
+    public static final String SUCCESS = "FX Deal saved successfully";
 }

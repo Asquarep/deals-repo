@@ -17,6 +17,7 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @SpringBootTest
 class DealServiceTests {
@@ -39,6 +40,21 @@ class DealServiceTests {
 		);
 
 		Assertions.assertEquals(MessageConstants.NON_UNIQUE_ID, expectedException.getMessage());
+	}
+
+	@Test
+	public void whenSubmitDeal_WithAmountEqualOrLessThanZero_ShouldThrowValidationException() {
+		Mockito.doReturn(false)
+				.when(dealRepository).existsByUniqueId(Mockito.anyString());
+
+		DealRequest dealRequest = composeDealRequestWithLessThanOrEqualZeroAmount();
+
+		Throwable expectedException = Assertions.assertThrows(
+				ValidationException.class,
+				() -> dealService.submitRequest(dealRequest)
+		);
+
+		Assertions.assertEquals(MessageConstants.INVALID_DEAL_AMOUNT, expectedException.getMessage());
 	}
 
 	@Test
@@ -114,6 +130,15 @@ class DealServiceTests {
 				.fromCurrency(faker.lorem().characters(3))
 				.toCurrency(faker.lorem().characters(3))
 				.amount(BigDecimal.valueOf(faker.number().numberBetween(1_000, 1_000_000)))
+				.build();
+	}
+
+	private DealRequest composeDealRequestWithLessThanOrEqualZeroAmount() {
+		return DealRequest.builder()
+				.uniqueId(faker.lorem().characters(15))
+				.fromCurrency(faker.lorem().characters(3))
+				.toCurrency(faker.lorem().characters(3))
+				.amount(BigDecimal.valueOf(-11))
 				.build();
 	}
 }

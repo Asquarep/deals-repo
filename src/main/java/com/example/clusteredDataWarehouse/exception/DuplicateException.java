@@ -6,7 +6,4 @@ public class DuplicateException extends RuntimeException{
         super(message);
     }
 
-    public DuplicateException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }
